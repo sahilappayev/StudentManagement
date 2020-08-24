@@ -8,7 +8,7 @@ def addNewStudent():
             for s in student.userList:
                 if s.studentNo == studentNo_:
                     print("Bu koda sahib telebe artiq sistemde var!")
-                    break
+                    return
             return studentNo_
 
         else:
