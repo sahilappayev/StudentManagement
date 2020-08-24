@@ -13,37 +13,51 @@ def addNewStudent():
 
         else:
             print("Telebe nomresi dogru daxil edilmeyib!")
-            showMenu()
     studentNo = setStudentNo()
 
     def setName():
-        return input("Adi daxil edin: ").strip()
-    name = setName()
+        name_ = input("Adi daxil edin: ").strip()
+        if len(name_) != 0:
+            return name_
+        else:
+            print("Ad bosh ola bilmez! Daxil edin.")
+    name = ""
+    if bool(studentNo):
+        name = setName()
 
     def setSurname():
-        return input("Soyadi daxil edin: ").strip()
-    surname = setSurname()
+        surname_ = input("Soyadi daxil edin: ").strip()
+        if len(surname_) != 0:
+            return surname_
+        else:
+            print("Soyad bosh ola bilmez! Daxil edin.")
+    surname = ""
+    if bool(name):
+        surname = setSurname()
 
     def setEmail():
         email_ = input("Emaili daxil edin: ").strip()
-        if email_.find("@") != -1:
+        if email_.find("@") != -1 and len(email_) != 0:
             return email_
         else:
             print("Email melumatlari dogru daxil edilmeyib! Tekarar daxil edin.")
-            showMenu()
-    email = setEmail()
+    email = ""
+    if bool(surname):
+        email = setEmail()
 
     def setPhone():
         phone_ = input("Telefon nomresini daxil edin (+994_________): ").strip()
-        if phone_.startswith("+994") and len(phone_) == 13:
+        if phone_.startswith("+994") and len(phone_) == 13 and len(phone_) != 0:
             return phone_
         else:
             print("Telefon nomresi dogru daxil edilmeyib! Tekrar daxil edin.")
-            showMenu()
-    phone = setPhone()
+    phone = ""
+    if bool(email):
+        phone = setPhone()
 
-    obj = student.Student(studentNo, name, surname, email, phone)
-    student.userList.append(obj)
+    if bool(studentNo) and bool(name) and bool(surname) and bool(email) and bool(phone):
+        obj = student.Student(studentNo, name, surname, email, phone)
+        student.userList.append(obj)
 
 def printStudents():
     if len(student.userList) == 0:
@@ -143,16 +157,19 @@ def printByName():
 
 # menu section
 def menu():
-    return int(input("""
-        1. Telebe daxil et
-        2. Telebe koduna gore telebe melumatlarini sil
-        3. Telebe koduna gore telebe melumatlarini deyishdir
-        4. Telebe adina gore telebe melumatlarini goster
-        5. Butun telebelerin melumatlarini goster
-        6. Sistemden chix
+    i = input("""
+            1. Telebe daxil et
+            2. Telebe koduna gore telebe melumatlarini sil
+            3. Telebe koduna gore telebe melumatlarini deyishdir
+            4. Telebe adina gore telebe melumatlarini goster
+            5. Butun telebelerin melumatlarini goster
+            6. Sistemden chix
 
-        Menyudaki emrleri icra etmek uhun muvafiq reqemi daxil edin:
-    """).strip())
+            Menyudaki emrleri icra etmek uhun muvafiq reqemi daxil edin:
+        """).strip()
+
+    if bool(i):
+        return int(i)
 
 def showMenu():
     command = menu()
