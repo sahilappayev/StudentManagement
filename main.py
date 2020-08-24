@@ -81,6 +81,7 @@ def deleteStudent():
             for s in student.userList:
                 if studentNo_ == s.studentNo:
                     student.userList.remove(s)
+                    print(f"{s.name} adli telebeye aid melumatlar sistemden ugurla silindi")
         else:
             print("Sistemde bu koda sahib telebe tapilmadi!")
 
@@ -102,34 +103,50 @@ def editStudent():
         if check:
             for s in student.userList:
                 if s.studentNo == studentNo:
-                    name = input("Adi daxil edin: ").strip()
+                    def setName():
+                        name_ = input("Adi daxil edin: ").strip()
+                        if len(name_) != 0:
+                            return name_
+                        else:
+                            print("Ad bosh ola bilmez! Daxil edin.")
+                    name = setName()
 
-                    surname = input("Soyadi daxil edin: ").strip()
+                    def setSurname():
+                        surname_ = input("Soyadi daxil edin: ").strip()
+                        if len(surname_) != 0:
+                            return surname_
+                        else:
+                            print("Soyad bosh ola bilmez! Daxil edin.")
+                    surname = ""
+                    if bool(name):
+                        surname = setSurname()
 
                     def setEmail():
                         email_ = input("Emaili daxil edin: ").strip()
-                        if email_.find("@") != -1:
+                        if email_.find("@") != -1 and len(email_) != 0:
                             return email_
                         else:
                             print("Email melumatlari dogru daxil edilmeyib! Tekarar daxil edin.")
-                            setEmail()
-
-                    email = setEmail()
+                    email = ""
+                    if bool(surname):
+                        email = setEmail()
 
                     def setPhone():
                         phone_ = input("Telefon nomresini daxil edin (+994_________): ").strip()
-                        if phone_.startswith("+994") and len(phone_) == 13:
+                        if phone_.startswith("+994") and len(phone_) == 13 and len(phone_) != 0:
                             return phone_
                         else:
                             print("Telefon nomresi dogru daxil edilmeyib! Tekrar daxil edin.")
-                            setPhone()
+                    phone = ""
+                    if bool(email):
+                        phone = setPhone()
 
-                    phone = setPhone()
-
-                    s.name = name
-                    s.surname = surname
-                    s.email = email
-                    s.phone = phone
+                    if bool(studentNo) and bool(name) and bool(surname) and bool(email) and bool(phone):
+                        s.name = name
+                        s.surname = surname
+                        s.email = email
+                        s.phone = phone
+                        print(f"{s.studentNo} telebe koduna malik telebenin melumatlari ugurla yenilendi.")
 
         else:
             print("Sistemde bu koda sahib telebe tapilmadi!")
@@ -158,6 +175,7 @@ def printByName():
 # menu section
 def menu():
     i = input("""
+    ---------------------------------------------------------------------------
             1. Telebe daxil et
             2. Telebe koduna gore telebe melumatlarini sil
             3. Telebe koduna gore telebe melumatlarini deyishdir
@@ -166,6 +184,7 @@ def menu():
             6. Sistemden chix
 
             Menyudaki emrleri icra etmek uhun muvafiq reqemi daxil edin:
+    ---------------------------------------------------------------------------
         """).strip()
 
     if bool(i):
